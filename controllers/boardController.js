@@ -12,5 +12,11 @@ class boardController {
         .then(result =>res.status(200).send(JSON.parse(result[0][0].BoardList)[0]))
         .catch(error => res.status(500).send(error))
     }
+
+    async getRestaurantList(req,res){
+        db.query('EXEC getRestaurantsList ')
+        .then(result =>res.status(200).send(JSON.parse(result[0][0].restaurants)))
+        .catch(error => res.status(500).send(error))
+    }
 }
 module.exports = new boardController()
