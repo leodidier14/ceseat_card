@@ -13,7 +13,7 @@ var menu = db.define("Menus", {
     },
     name: Sequelize.STRING,
     description: Sequelize.STRING,
-    price: Sequelize.INTEGER,
+    price: Sequelize.FLOAT,
     pictureLink: Sequelize.STRING
 })
 

@@ -9,17 +9,18 @@ const menuArticlesModel = require('../models/menusArticles')
 class menuController {
 
     async addMenu(req,res){
+        console.log(req.body)
         menuModel.create({
                                 "restaurantId":req.body.restaurantId,
                                 "name":req.body.name,
                                 "description":req.body.description,
                                 "price":req.body.price,
-                                "pictureLink":req.body.pictureLink
+                                "pictureLink":req.body.image
                             })
-        .then(result => { db.query('SELECT @@IDENTITY', {type: Sequelize.QueryTypes.SELECT})
+        .then( async result => { t = await db.query('SELECT @@IDENTITY', {type: Sequelize.QueryTypes.SELECT})
                             .then(id => {
                                 
-                                req.body.ArticleList.forEach( article => {
+                                req.body.articles.forEach( article => {
 
                                     console.log({"menuId":id[0][''],"articleId":article.id})
                                     menuArticlesModel.create({"menuId":id[0][''],"articleId":article.id})
@@ -27,11 +28,12 @@ class menuController {
                             })
                             res.status(200).send(result)
         })
-        .catch(error => res.status(500).send(error))
+        .catch(error => {console.log(error); res.status(400).send(error)})
     }
 
     async editMenu(req,res){
-        menuModel.update({
+        
+        const men = await menuModel.update({
             "name":req.body.name,
             "category":req.body.category,
             "description":req.body.description,
@@ -39,7 +41,7 @@ class menuController {
             "pictureLink":req.body.pictureLink
         },{
             where:{
-                "id":req.body.menuId
+                "id":req.body.id
             }
         }
         )
@@ -47,12 +49,15 @@ class menuController {
             console.log('ICI')
             menuArticlesModel.destroy({where: {'menuId': req.body.menuId}}).then( () => {
                 req.body.articleList.forEach( article =>{
-                    menuArticlesModel.create({"menuId":req.body.menuId,"articleId":article.id}).catch(error => res.status(500).send(error))
+                    menuArticlesModel.create({"menuId":req.body.menuId,"articleId":article.id}).catch(error => {console.log(error); 
+                        res.status(400).send(error)}).then(res.send(200).send('menu add'))
             }
             )
         })
             }
-        ).catch(error => res.status(500).send(error))
+        ).catch(error => {console.log(error); res.status(400).send(error)})
+        
+        
     }
 
     async deleteMenu(req,res){
@@ -65,7 +70,7 @@ class menuController {
         }
         )
         .then(result => res.status(200).send(result))
-        .catch(error => res.status(500).send(error))
+        .catch(error => {console.log(error); res.status(400).send(error)})
     }
 }
 
