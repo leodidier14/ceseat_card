@@ -12,6 +12,10 @@ router.get('/restaurantboard/:restaurantId', function(req, res) {
   boardController.getBoard(req,res)
 });
 
+router.get('/available', function(req, res) {
+  console.log('ask for availableity')
+  res.send(true)
+});
 
 router.post('/menu', function(req, res) {
   console.log('post on /board/addmenu')

@@ -9,7 +9,6 @@ const menuArticlesModel = require('../models/menusArticles')
 class menuController {
 
     async addMenu(req,res){
-        console.log(req.body)
         menuModel.create({
                                 "restaurantId":req.body.restaurantId,
                                 "name":req.body.name,
@@ -21,8 +20,6 @@ class menuController {
                             .then(id => {
                                 
                                 req.body.articles.forEach( article => {
-
-                                    console.log({"menuId":id[0][''],"articleId":article.id})
                                     menuArticlesModel.create({"menuId":id[0][''],"articleId":article.id})
                                 })
                             })
@@ -32,7 +29,6 @@ class menuController {
     }
 
     async editMenu(req,res){
-        
         const men = await menuModel.update({
             "name":req.body.name,
             "description":req.body.description,
@@ -45,7 +41,6 @@ class menuController {
         }
         )
         .then(result => {
-            console.log('ICI')
             menuArticlesModel.destroy({where: {'menuId': req.body.menuId}}).then( () => {
                 req.body.articleList.forEach( article =>{
                     menuArticlesModel.create({"menuId":req.body.menuId,"articleId":article.id}).catch(error => {console.log(error); 
