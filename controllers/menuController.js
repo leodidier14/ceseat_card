@@ -14,7 +14,7 @@ class menuController {
                                 "restaurantId":req.body.restaurantId,
                                 "name":req.body.name,
                                 "description":req.body.description,
-                                "price":req.body.price,
+                                "price":parseFloat(req.body.price.replace(',','.')).toFixed(2),
                                 "pictureLink":req.body.image
                             })
         .then( async result => { t = await db.query('SELECT @@IDENTITY', {type: Sequelize.QueryTypes.SELECT})
@@ -35,9 +35,8 @@ class menuController {
         
         const men = await menuModel.update({
             "name":req.body.name,
-            "category":req.body.category,
             "description":req.body.description,
-            "price":req.body.price,
+            "price":parseFloat(req.body.price.replace(',','.')).toFixed(2),
             "pictureLink":req.body.pictureLink
         },{
             where:{

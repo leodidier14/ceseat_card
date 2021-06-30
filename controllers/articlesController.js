@@ -13,7 +13,7 @@ class articlesController {
                                 "name":req.body.name,
                                 "category":req.body.type,
                                 "description":req.body.description,
-                                "price":parseFloat(req.body.price),
+                                "price":parseFloat(req.body.price.replace(',','.')).toFixed(2),
                                 "pictureLink":req.body.image
                             })
         .then(result => res.status(200).send(result))
@@ -23,10 +23,10 @@ class articlesController {
     async editArticle(req,res){
         articleModel.update({
             "name":req.body.name,
-            "category":req.body.category,
+            "category":req.body.type,
             "description":req.body.description,
-            "price": parseFloat(req.body.price),
-            "pictureLink":req.body.pictureLink
+            "price": parseFloat(req.body.price.replace(',','.')).toFixed(2),
+            "pictureLink":req.body.image
         },{
             where:{
                 "id":req.body.id
