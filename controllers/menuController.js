@@ -17,7 +17,7 @@ class menuController {
                                 "price":parseFloat(req.body.price.replace(',','.')).toFixed(2),
                                 "pictureLink":req.body.image
                             })
-        .then( async result => { t = await db.query('SELECT @@IDENTITY', {type: Sequelize.QueryTypes.SELECT})
+        .then( async result => { await db.query('SELECT @@IDENTITY', {type: Sequelize.QueryTypes.SELECT})
                             .then(id => {
                                 
                                 req.body.articles.forEach( article => {
