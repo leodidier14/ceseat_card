@@ -26,7 +26,13 @@ var router = require('./routes/routes.js');
 
 var app = express();
 
-
+const requestLog = require('./models/requestLog')
+app.use((req,res,next) => {
+  requestLog.create({name:pjson.name,date: Date.now()}, (err)=> {
+    if(err) console.log(err)
+  })
+  next()
+})
 
 app.use(logger('dev'));
 
