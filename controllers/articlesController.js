@@ -12,7 +12,7 @@ class articlesController {
                                 "name":req.body.name,
                                 "category":req.body.type,
                                 "description":req.body.description,
-                                "price":parseFloat(req.body.price.replace(',','.')).toFixed(2),
+                                "price":parseFloat(req.body.price.toString().replace(',','.')).toFixed(2),
                                 "pictureLink":req.body.image
                             })
         .then(result => res.status(200).send(result))
@@ -24,7 +24,7 @@ class articlesController {
             "name":req.body.name,
             "category":req.body.type,
             "description":req.body.description,
-            "price": parseFloat(req.body.price.replace(',','.')).toFixed(2),
+            "price": parseFloat(req.body.price.toString().replace(',','.')).toFixed(2),
             "pictureLink":req.body.image
         },{
             where:{

@@ -6,14 +6,17 @@ require('dotenv').config({ path: path.resolve(__dirname, '.env') })
 const database = new Sequelize(process.env.DB_NAME, process.env.USER_NAME, process.env.USER_PW, {
     host: process.env.DB_HOST,
     dialect: 'mssql',
+    logging: false,
     pool: {
         max: 5,
         min: 0,
         idle: 10000,
     },
     define: {
-      timestamps: false
-  }
+      timestamps: false,
+      
+    }
+
 });
 
 database.sync();

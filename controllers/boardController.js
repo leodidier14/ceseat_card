@@ -7,7 +7,7 @@ class boardController {
 
     async getBoard(req,res){
         db.query('EXEC getRestaurantBoard '+req.params.restaurantId)
-        .then(result =>{console.log(result);res.status(200).send(JSON.parse(result[0][0].BoardList)[0])})
+        .then(result =>{res.status(200).send(JSON.parse(result[0][0].BoardList)[0])})
         .catch(error => {console.log(error); res.status(400).send(error)})
     }
 

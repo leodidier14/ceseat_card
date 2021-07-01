@@ -8,9 +8,9 @@ require('dotenv').config({ path: path.resolve(__dirname, '.env') })
 const mongoose = require('mongoose');
 const { verifTokenAppController } = require('./controllers/tokenAppController')
 //Connect to db
-mongoose.connect(process.env.DB_MONGO_CONNECT, {useNewUrlParser: true}, () =>
+mongoose.connect(process.env.DB_MONGO_CONNECT, {useNewUrlParser: true, useUnifiedTopology:true}, () =>
     console.log("connected to database")
-);
+)
 
 const route = '/api/board/'
 //######### Display name and version ############// 
