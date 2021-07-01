@@ -25,7 +25,7 @@ class menuController {
                             })
                             res.status(200).send(result)
         })
-        .catch(error => {console.log(error); res.status(400).send(error)})
+        .catch(error => {res.status(400).send(error)})
     }
 
     async editMenu(req,res){
@@ -43,13 +43,13 @@ class menuController {
         .then(result => {
             menuArticlesModel.destroy({where: {'menuId': req.body.menuId}}).then( () => {
                 req.body.articleList.forEach( article =>{
-                    menuArticlesModel.create({"menuId":req.body.menuId,"articleId":article.id}).catch(error => {console.log(error); 
+                    menuArticlesModel.create({"menuId":req.body.menuId,"articleId":article.id}).catch(error => { 
                         res.status(400).send(error)}).then(res.send(200).send('menu add'))
             }
             )
         })
             }
-        ).catch(error => {console.log(error); res.status(400).send(error)})
+        ).catch(error => {res.status(400).send(error)})
         
         
     }
@@ -64,7 +64,7 @@ class menuController {
         }
         )
         .then(result => res.status(200).send(result))
-        .catch(error => {console.log(error); res.status(400).send(error)})
+        .catch(error => {res.status(400).send(error)})
     }
 }
 

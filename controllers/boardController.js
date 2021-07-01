@@ -3,8 +3,6 @@ require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
 var db = require('../database')
 var Sequelize = require('sequelize')
 
-
-
 class boardController {
 
     async getBoard(req,res){

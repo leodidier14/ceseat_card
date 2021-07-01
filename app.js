@@ -6,6 +6,7 @@ var logger = require('morgan');
 const path = require('path')
 require('dotenv').config({ path: path.resolve(__dirname, '.env') })
 const mongoose = require('mongoose');
+const { verifTokenAppController } = require('./controllers/tokenAppController')
 //Connect to db
 mongoose.connect(process.env.DB_MONGO_CONNECT, {useNewUrlParser: true}, () =>
     console.log("connected to database")
@@ -34,6 +35,15 @@ app.use((req,res,next) => {
     if(err) console.log(err)
   })
   next()
+})
+
+app.use(async(req,res,next) => {
+  const tokenapp = req.headers['tokenapp'];
+  checkTokenApp = await verifTokenAppController(tokenapp) 
+  if(checkTokenApp || req.originalUrl.includes('available'))
+    next()
+  else 
+    res.status(400).send('not an authentified APP ')
 })
 
 app.use(logger('dev'));

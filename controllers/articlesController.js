@@ -7,7 +7,6 @@ const articleModel = require('../models/articles')
 
 class articlesController {
     async addArticle(req,res){
-        console.log(req.body)
         articleModel.create({
                                 "restaurantId":req.body.restaurantId,
                                 "name":req.body.name,
@@ -17,7 +16,7 @@ class articlesController {
                                 "pictureLink":req.body.image
                             })
         .then(result => res.status(200).send(result))
-        .catch(error =>{console.log(error); res.status(400).send(error)})
+        .catch(error =>{res.status(400).send(error)})
     }
 
     async editArticle(req,res){
@@ -34,7 +33,7 @@ class articlesController {
         }
         )
         .then(result => res.status(200).send(result))
-        .catch(error => {console.log(error); res.status(400).send(error)})
+        .catch(error => {res.status(400).send(error)})
     }
 
     async deleteArticle(req,res){
@@ -47,10 +46,8 @@ class articlesController {
         }
         )
         .then(result => res.status(200).send(result))
-        .catch(error => {console.log(error); res.status(400).send(error)})
-    }
-
-    
+        .catch(error => {res.status(400).send(error)})
+    }   
 }
 
 module.exports = new articlesController()
